@@ -1,0 +1,43 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ConsoleApp5
+{
+    class DasSoapApi
+    {
+		<#
+		    using (StreamReader r = new StreamReader(Host.ResolvePath("api.json")))
+            {
+                string jsonText = r.ReadToEnd();
+                JObject json = JObject.Parse(jsonText);
+
+				var arr = json.SelectToken("apiEndPoints");
+                foreach (var j in arr)
+                {
+                    Write("public string " + j.SelectToken("name").ToString() + "(");
+
+					foreach (var p in j.SelectToken("params"))
+					{ 
+						Write(p.SelectToken("type").ToString() + " " + p.SelectToken("name").ToString());
+						if(p != j.SelectToken("params").Last) { Write(", "); }
+					}
+
+					Write(") {\n\t\t\t");
+
+					Write("return \"I'm function " + j.SelectToken("name").ToString() + ": \" + ");
+					foreach (var p in j.SelectToken("params"))
+					{ 
+						Write(p.SelectToken("name").ToString());
+						if(p != j.SelectToken("params").Last) { Write(" + "); }
+						if(p == j.SelectToken("params").Last) { Write(";"); }
+					}
+
+					Write("\n\t\t}\n\n");
+					if(j != arr.Last) { Write("\t\t"); }
+                }
+            }
+		#>
+	}
+}
+<#@ template debug="false" hostspecific="true" language="C#" #><#@ assembly name="Newtonsoft.Json.dll" #><#@ assembly name="System.Core" #><#@ import namespace="Newtonsoft.Json.Linq" #><#@ import namespace="System" #><#@ import namespace="System.IO" #>

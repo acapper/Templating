@@ -1,0 +1,31 @@
+{
+  "apiEndPoints": [
+    {
+      "name": "Method1",
+      "params": [
+        {
+          "type": "string",
+          "name": "message1"
+        }
+      ]
+    },
+    {
+      "name": "Method2",
+      "params": [
+        {
+          "type": "string",
+          "name": "message2"
+        }
+      ]
+    },
+    {
+      "name": "Method3",
+      "params": [
+        {
+          "type": "string",
+          "name": "message3"
+        }
+      ]
+    }
+  ]
+}
